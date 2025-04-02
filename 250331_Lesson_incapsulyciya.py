@@ -1,3 +1,4 @@
+from datetime import  datetime
 '''
 Инкапсуляция - одоин из основных принципов ООП, который подразумевает сокрытие внутреннего состояния объекта
 и предоставление доступа к нему только через специальные методы.
@@ -20,13 +21,30 @@ class Person:
     def change_name(self, name):
         self.name = name
 
-    def get_passport(self):
+    # def get_passport(self):
+    #     return self.__passport
+    #
+    # def set_passport(self, passport):
+    #     if not passport.isdigit():
+    #         raise  ValueError ('паспорт должен быть цифрой')
+    #     self.__passport = passport
+
+
+    #  Декораторы
+    @property
+    def passport(self):
         return self.__passport
 
-    def set_passport(self, passport):
+    @passport.setter
+    def passport(self, passport):
         if not passport.isdigit():
             raise  ValueError ('паспорт должен быть цифрой')
         self.__passport = passport
+
+    @property
+    def current_time(self):
+        return  datetime.today().strftime('%d.%m.%Y')
+
 
 person_1= Person(name='Nokita', lastname='Ivanov', age='15', passport='123456')
 person_1.change_name(name='Vova') # для защищенных и незащищенных атрибутов (в Rython это только на уровне договоренностей)
@@ -40,8 +58,14 @@ person_1.__passport = 2
 print(person_1.__passport)
 
 # корректное использование языка:
-print(person_1.get_passport()) # _Person__passport - настоящее имя атрибута
-print(dir(person_1))
+# print(person_1.get_passport()) # _Person__passport - настоящее имя атрибута
+# print(dir(person_1))
+#
+# person_1.set_passport('7777777')
+# print(person_1.get_passport())
 
-person_1.set_passport('7777777')
-print(person_1.get_passport())
+print(person_1.passport)
+person_1.passport= '111111'
+print(person_1.passport)
+
+print(person_1.current_time)
